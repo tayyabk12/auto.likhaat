@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caption Languages — Kalakar</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&display=swap">
+    <link rel="stylesheet" href="css/legal.css">
+</head>
+<body class="legal-page">
+    <header class="legal-header">
+        <a href="/" class="logo-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="100" height="24" fill="none" viewBox="0 0 116 28" aria-label="Kalakar">
+                <path fill="#fff" d="M11.83 12.456q1.537.405 2.548 1.289 1.013.847 1.745 2.247.733 1.362 1.536 3.757L20.45 28h-4.956l-2.652-7.735q-.489-1.437-.908-2.174a3.4 3.4 0 0 0-1.116-1.289q-.733-.517-2.06-.736l-3.838 4.493V28H0V2.216h4.92V14.04l9.877-11.824h5.793z"/>
+                <path fill="#48A680" d="M29.1 2.105h-5.91l5.991 13.097h-5.99V28h12.185V15.202z"/>
+                <path fill="#1D1D1D" d="M27.09 19.94h4.549v4.802h-4.55z"/>
+                <path fill="#fff" d="M42.992 27.847a.31.31 0 0 1-.36.045q-1.624-.917-2.283-2.065-.699-1.253-.698-3.463V5.714q0-.993-.384-1.62-.286-.514-.972-1.102a.37.37 0 0 1-.015-.541L40.846.084a.31.31 0 0 1 .36-.045q1.624.92 2.284 2.103.698 1.215.698 3.425v16.65q0 .995.349 1.62.315.514 1.006 1.103a.366.366 0 0 1 .016.54z"/>
+                <path fill="#48A680" d="M54.372 2.105h-5.91l5.991 13.097h-5.99V28h12.185V15.202z"/>
+                <path fill="#1D1D1D" d="M52.362 19.94h4.55v4.802h-4.55z"/>
+            </svg>
+        </a>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/templates">Templates</a>
+            <a href="/blogs">Blogs</a>
+            <a href="/academy">Academy</a>
+        </nav>
+        <a href="/" class="back-btn">← Back</a>
+    </header>
+    <main class="legal-main" style="max-width: 1000px;">
+        <h1>Caption Languages</h1>
+        <p class="updated">Auto-generate captions in 20 desi &amp; regional languages — up to 97% accuracy</p>
+
+        <div class="lang-full-grid" id="lang-grid"></div>
+
+        <h2>How it works</h2>
+        <p>Each language uses Whisper (via Transformers.js) running locally in your browser. The first time you transcribe in a language, the model downloads once and caches. After that, transcription works offline.</p>
+        <p>For best accuracy in Desi languages, use the <strong>Small</strong> model (~250MB). The <strong>Base</strong> model (~80MB) is a good balance of speed and accuracy.</p>
+    </main>
+    <footer class="legal-footer">
+        <p>Kalakar OS — open-source rebuild. No affiliation with the original Kalakar product. · <a href="/">Home</a> · <a href="/termsandconditions">Terms</a> · <a href="/privacypolicy">Privacy</a></p>
+    </footer>
+    <script>
+        const LANGS = [
+            ['hi', 'Hindi', 'हिन्दी'], ['en', 'English', 'English'], ['ne', 'Nepali', 'नेपाली'],
+            ['ur', 'Urdu', 'اردو'], ['ta', 'Tamil', 'தமிழ்'], ['ml', 'Malayalam', 'മലയാളം'],
+            ['gu', 'Gujarati', 'ગુજરાતી'], ['bn', 'Bengali', 'বাংলা'], ['pa', 'Punjabi', 'ਪੰਜਾਬੀ'],
+            ['te', 'Telugu', 'తెలుగు'], ['sd', 'Sindhi', 'سنڌي'], ['mr', 'Marathi', 'मराठी'],
+            ['kn', 'Kannada', 'ಕನ್ನಡ'], ['ps', 'Pushto', 'پښتو'], ['ms', 'Malay', 'Melayu'],
+            ['as', 'Assamese', 'অসমীয়া'], ['ks', 'Kashmiri', 'کٲشُر'], ['fa', 'Persian', 'فارسی'],
+            ['ar', 'Arabic', 'العربية'], ['or', 'Odia', 'ଓଡ଼ିଆ']
+        ];
+        const grid = document.getElementById('lang-grid');
+        LANGS.forEach(([code, name, native]) => {
+            const a = document.createElement('a');
+            a.className = 'lang-full-card';
+            a.href = '/editor?lang=' + code;
+            a.innerHTML = `<div class="native">${native}</div><div class="name">${name}</div><div class="code">${code.toUpperCase()} → Auto Caption</div>`;
+            grid.appendChild(a);
+        });
+    </script>
+</body>
+</html>

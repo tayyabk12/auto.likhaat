@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalakar — Templates</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+<body class="landing">
+    <header class="landing-header">
+        <a href="/" class="landing-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="116" height="28" fill="none" viewBox="0 0 116 28" aria-label="Kalakar">
+                <path fill="#fff" d="M11.83 12.456q1.537.405 2.548 1.289 1.013.847 1.745 2.247.733 1.362 1.536 3.757L20.45 28h-4.956l-2.652-7.735q-.489-1.437-.908-2.174a3.4 3.4 0 0 0-1.116-1.289q-.733-.517-2.06-.736l-3.838 4.493V28H0V2.216h4.92V14.04l9.877-11.824h5.793z"/>
+                <path fill="#48A680" d="M29.1 2.105h-5.91l5.991 13.097h-5.99V28h12.185V15.202z"/>
+                <path fill="#1D1D1D" d="M27.09 19.94h4.549v4.802h-4.55z"/>
+                <path fill="#fff" d="M80.513 27.565c.058.219-.098.435-.313.435h-3.967a.33.33 0 0 1-.313-.251l-1.47-5.569q-.279-1.03-.837-1.51-.525-.485-1.729-.644a.31.31 0 0 0-.265.099l-2.066 2.213a.35.35 0 0 0-.093.24v5.079c0 .19-.145.343-.325.343h-3.887a.334.334 0 0 1-.325-.343v-21.5q0-.995-.384-1.62-.286-.514-.972-1.103a.37.37 0 0 1-.015-.541L66.119.526a.31.31 0 0 1 .36-.045q1.624.92 2.283 2.103.698 1.215.698 3.426v9.761c0 .308.355.46.558.239l4.79-5.218a.32.32 0 0 1 .234-.104h4.599c.288 0 .434.367.23.583l-4.601 4.92c-.177.188-.092.511.145.601q1.283.486 2.037 1.557.942 1.29 1.64 3.831z"/>
+            </svg>
+        </a>
+        <nav class="landing-nav">
+            <a href="/">Home</a>
+            <a href="/editor">Editor</a>
+            <a href="/library">Library</a>
+        </nav>
+        <a href="/editor" class="landing-cta">Open Editor</a>
+    </header>
+
+    <main>
+        <section>
+            <h2>All your Favourite Templates</h2>
+            <p class="section-sub">Dozens of fully customizable templates in desi language. Click any template to open the editor with the style applied.</p>
+            <div class="template-grid" id="template-grid"></div>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <p class="footer-note">Kalakar OS — open-source rebuild. Templates apply to your locally selected caption.</p>
+    </footer>
+
+    <script src="js/landing.js"></script>
+</body>
+</html>

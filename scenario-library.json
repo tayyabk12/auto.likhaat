@@ -1,0 +1,17 @@
+{
+  "browser": {
+    "mode": "launch",
+    "executable_path": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe"
+  },
+  "start_url": {"url": "https://app.kalakar.io/library"},
+  "actions": [
+    {"step_id": "step1", "action": "goto", "destination": {"url": "https://app.kalakar.io/library"}, "wait_until": "domcontentloaded"},
+    {"step_id": "step2", "action": "wait_for_timeout", "duration_ms": 10000}
+  ],
+  "capture": {
+    "after_each_step": [],
+    "at_end": ["url", "dom", "accessibility"],
+    "events": [],
+    "network": {"request_body": false, "response_body": false, "header_values": false}
+  }
+}

@@ -1,0 +1,108 @@
+/* Kalakar legal / info pages */
+body.legal-page {
+    background: #0B0C0B;
+    color: #F2F3F0;
+    font-family: 'Outfit', sans-serif;
+    min-height: 100vh;
+    display: block;
+    height: auto;
+}
+.legal-header {
+    position: sticky; top: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 32px;
+    background: rgba(11, 12, 11, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid #2A2E29;
+}
+.legal-header a.logo-link { display: flex; align-items: center; text-decoration: none; }
+.legal-header nav { display: flex; gap: 22px; }
+.legal-header nav a { color: #A5A9A3; text-decoration: none; font-size: 14px; font-weight: 600; }
+.legal-header nav a:hover { color: #F2F3F0; }
+.legal-header .back-btn {
+    background: #48A680; color: #052015; font-weight: 700; font-size: 14px;
+    padding: 9px 18px; border-radius: 999px; text-decoration: none;
+}
+.legal-main {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 56px 24px 80px;
+}
+.legal-main h1 {
+    font-size: 36px; font-weight: 900; margin-bottom: 8px; letter-spacing: -1px;
+}
+.legal-main .updated { color: #A5A9A3; font-size: 13px; margin-bottom: 36px; }
+.legal-main h2 {
+    font-size: 20px; font-weight: 800; margin: 32px 0 12px; color: #48A680;
+}
+.legal-main p, .legal-main li {
+    color: #A5A9A3; font-size: 14.5px; line-height: 1.7; margin-bottom: 12px;
+}
+.legal-main ul { padding-left: 20px; margin-bottom: 16px; }
+.legal-main li { margin-bottom: 6px; }
+.legal-main a { color: #48A680; text-decoration: none; }
+.legal-main a:hover { text-decoration: underline; }
+.legal-footer {
+    border-top: 1px solid #2A2E29;
+    padding: 28px 32px;
+    text-align: center;
+    color: #A5A9A3;
+    font-size: 12px;
+}
+.legal-footer a { color: #48A680; text-decoration: none; }
+
+/* Delete account specific */
+.danger-zone {
+    background: rgba(239, 68, 68, 0.08);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 14px;
+    padding: 28px;
+    margin-top: 24px;
+}
+.danger-zone h2 { color: #ef4444; margin-top: 0; }
+.danger-btn {
+    background: #ef4444; color: #fff; border: none; border-radius: 10px;
+    padding: 12px 28px; font-size: 15px; font-weight: 700; cursor: pointer;
+    font-family: 'Outfit', sans-serif; margin-top: 12px;
+}
+.danger-btn:hover { filter: brightness(1.1); }
+
+/* Blog list */
+.blog-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    margin-top: 36px;
+}
+.blog-card {
+    background: #141614; border: 1px solid #2A2E29; border-radius: 14px;
+    padding: 24px; text-decoration: none; color: #F2F3F0;
+    transition: border-color 0.15s;
+    display: block;
+}
+.blog-card:hover { border-color: #48A680; }
+.blog-card .blog-tag {
+    display: inline-block; background: rgba(72,166,128,0.15); color: #48A680;
+    font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 999px;
+    margin-bottom: 12px;
+}
+.blog-card h3 { font-size: 17px; font-weight: 800; margin-bottom: 8px; line-height: 1.3; }
+.blog-card p { color: #A5A9A3; font-size: 13.5px; line-height: 1.5; }
+.blog-card .blog-date { color: #A5A9A3; font-size: 12px; margin-top: 14px; }
+
+/* Languages page */
+.lang-full-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-top: 36px;
+}
+.lang-full-card {
+    background: #141614; border: 1px solid #2A2E29; border-radius: 12px;
+    padding: 20px; text-decoration: none; color: #F2F3F0;
+    transition: border-color 0.15s;
+}
+.lang-full-card:hover { border-color: #48A680; }
+.lang-full-card .native { font-size: 22px; font-weight: 800; margin-bottom: 4px; }
+.lang-full-card .name { color: #A5A9A3; font-size: 14px; font-weight: 600; }
+.lang-full-card .code { color: #48A680; font-size: 12px; font-weight: 700; margin-top: 8px; }

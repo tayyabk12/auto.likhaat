@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalakar — Academy</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="css/landing.css">
+    <style>
+        .academy-hero { text-align: center; padding: 72px 0 20px; }
+        .academy-hero h1 { font-size: clamp(30px, 4vw, 46px); font-weight: 900; letter-spacing: -1px; }
+        .academy-hero p { color: var(--text-dim); margin-top: 16px; font-size: 15px; max-width: 620px; margin-left: auto; margin-right: auto; }
+        .lesson-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin: 44px 0 20px; }
+        .lesson-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 24px; display: flex; flex-direction: column; gap: 10px; }
+        .lesson-tag { color: var(--green); font-size: 11px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; }
+        .lesson-card h3 { font-size: 16px; font-weight: 800; line-height: 1.3; }
+        .lesson-card p { color: var(--text-dim); font-size: 13px; line-height: 1.6; flex: 1; }
+        .lesson-meta { display: flex; justify-content: space-between; align-items: center; font-size: 12px; color: var(--text-dim); font-family: var(--font-mono); }
+    </style>
+</head>
+<body class="landing">
+    <header class="landing-header">
+        <a href="/" class="landing-logo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="116" height="28" fill="none" viewBox="0 0 116 28" aria-label="Kalakar">
+                <path fill="#fff" d="M11.83 12.456q1.537.405 2.548 1.289 1.013.847 1.745 2.247.733 1.362 1.536 3.757L20.45 28h-4.956l-2.652-7.735q-.489-1.437-.908-2.174a3.4 3.4 0 0 0-1.116-1.289q-.733-.517-2.06-.736l-3.838 4.493V28H0V2.216h4.92V14.04l9.877-11.824h5.793z"/>
+                <path fill="#48A680" d="M29.1 2.105h-5.91l5.991 13.097h-5.99V28h12.185V15.202z"/>
+                <path fill="#1D1D1D" d="M27.09 19.94h4.549v4.802h-4.55z"/>
+                <path fill="#fff" d="M80.513 27.565c.058.219-.098.435-.313.435h-3.967a.33.33 0 0 1-.313-.251l-1.47-5.569q-.279-1.03-.837-1.51-.525-.485-1.729-.644a.31.31 0 0 0-.265.099l-2.066 2.213a.35.35 0 0 0-.093.24v5.079c0 .19-.145.343-.325.343h-3.887a.334.334 0 0 1-.325-.343v-21.5q0-.995-.384-1.62-.286-.514-.972-1.103a.37.37 0 0 1-.015-.541L66.119.526a.31.31 0 0 1 .36-.045q1.624.92 2.283 2.103.698 1.215.698 3.426v9.761c0 .308.355.46.558.239l4.79-5.218a.32.32 0 0 1 .234-.104h4.599c.288 0 .434.367.23.583l-4.601 4.92c-.177.188-.092.511.145.601q1.283.486 2.037 1.557.942 1.29 1.64 3.831z"/>
+            </svg>
+        </a>
+        <nav class="landing-nav">
+            <a href="/">Home</a>
+            <a href="/templates">Templates</a>
+            <a href="/library">Library</a>
+            <a href="/editor">Editor</a>
+        </nav>
+        <a href="/editor" class="landing-cta">Open Editor</a>
+    </header>
+
+    <main>
+        <div class="academy-hero">
+            <h1>Kalakar Academy</h1>
+            <p>Learn the captioning craft that top desi creators use — hook timing, karaoke pacing, template design and audio cleanup.</p>
+        </div>
+
+        <div class="lesson-grid">
+            <details class="lesson-card">
+                <summary>
+                    <span class="lesson-tag">Fundamentals</span>
+                    <h3>Word-by-word karaoke that holds attention</h3>
+                    <div class="lesson-meta"><span>4 min read</span><span>Beginner</span></div>
+                </summary>
+                <p>Why highlighting each word as it's spoken increases watch time, and how to time captions on the Kalakar timeline. Word-by-word karaoke keeps viewers glued because their eyes track the highlight, matching the audio rhythm. On the Kalakar timeline, add a caption, set start/end times, and the "Word by Word" mode auto-highlights each word in sequence.</p>
+            </details>
+            <details class="lesson-card">
+                <summary>
+                    <span class="lesson-tag">Templates</span>
+                    <h3>Designing viral caption templates</h3>
+                    <div class="lesson-meta"><span>6 min read</span><span>Beginner</span></div>
+                </summary>
+                <p>Anatomy of the Hormozi pop, Neon Punch and Boxed Pill styles — outline, highlight color and background pill. Hormozi Pop uses thick black stroke + yellow highlight; Neon Punch adds a glowing drop shadow; Boxed Pill wraps each word in a rounded rectangle. Open the Templates tab in the editor and click any card to apply the full style.</p>
+            </details>
+            <details class="lesson-card">
+                <summary>
+                    <span class="lesson-tag">Timing</span>
+                    <h3>Caption pacing for desi languages</h3>
+                    <div class="lesson-meta"><span>5 min read</span><span>Intermediate</span></div>
+                </summary>
+                <p>Hindi, Tamil and Bengali sentences run longer — split captions across the timeline without losing sync. Keep each caption block to 3–5 words for reels, or 6–8 words for long-form. Drag block edges on the timeline to trim; drag the block itself to shift timing. The Auto Caption tool groups words automatically at 5 words per cue.</p>
+            </details>
+            <details class="lesson-card">
+                <summary>
+                    <span class="lesson-tag">Audio</span>
+                    <h3>Cleaning street noise without a studio</h3>
+                    <div class="lesson-meta"><span>7 min read</span><span>Intermediate</span></div>
+                </summary>
+                <p>How highpass, presence EQ and compression rescue captions shot in traffic, crowds or markets. Toggle "AI Noise Cleanup" in the Audio panel: a 90 Hz highpass removes rumble, a 3 kHz presence boost lifts the voice, and a 4:1 compressor evens levels. Apply it on playback and it carries into your export.</p>
+            </details>
+            <details class="lesson-card">
+                <summary>
+                    <span class="lesson-tag">Workflow</span>
+                    <h3>Premiere Pro &amp; Resolve round-trip</h3>
+                    <div class="lesson-meta"><span>5 min read</span><span>Advanced</span></div>
+                </summary>
+                <p>Export SRT, import into your NLE, keep styles native — plus alpha channel workflows for overlays. In Kalakar, hit "Download SRT", then drag the file onto your Premiere or Resolve timeline. For styled overlays, enable "Alpha Channel" in the Export panel to render a transparent WebM you can composite over any footage.</p>
+            </details>
+            <details class="lesson-card">
+                <summary>
+                    <span class="lesson-tag">Growth</span>
+                    <h3>Hooks that stop the scroll</h3>
+                    <div class="lesson-meta"><span>4 min read</span><span>Beginner</span></div>
+                </summary>
+                <p>Pattern-interrupt captions in the first 3 seconds: what the 200,000+ creators on Kalakar are using right now. Open with a bold claim ("This changed everything"), a POV framing ("POV: You finally figured it out"), or a curiosity gap ("Wait for it…"). The Templates tab has ready-made hook styles — click one and type your line.</p>
+            </details>
+        </div>
+
+        <section style="border-top:none; padding-top:20px; text-align:center;">
+            <a href="/editor" class="btn-primary">Practice in the Editor</a>
+        </section>
+    </main>
+
+    <footer class="landing-footer">
+        <p class="footer-note">Kalakar OS — open-source rebuild. Academy content mirrors the original Kalakar Academy curriculum.</p>
+    </footer>
+</body>
+</html>

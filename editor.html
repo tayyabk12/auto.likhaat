@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalakar OS | Open Video Caption Studio</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@600;800;900&family=JetBrains+Mono:wght@400;500;700&display=swap">
+    <link rel="stylesheet" href="css/studio.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="studio-bg-ground">
+    <header class="studio-header">
+        <div class="brand-area">
+            <a href="/" class="brand-link">
+                <div class="logo-mark">K</div>
+                <div class="brand-text">KALAKAR <span>OS</span></div>
+            </a>
+        </div>
+        <nav class="menu-bar">
+            <a href="/" class="menu-item-link">Home</a>
+            <a href="/templates" class="menu-item-link">Templates</a>
+            <a href="/library" class="menu-item-link">Library</a>
+        </nav>
+        <div class="action-area">
+            <select id="caption-language" class="lang-picker" title="Caption language">
+                <option value="en">English</option>
+                <option value="hi">Hindi</option>
+                <option value="ne">Nepali</option>
+                <option value="ur">Urdu</option>
+                <option value="ta">Tamil</option>
+                <option value="ml">Malayalam</option>
+                <option value="gu">Gujarati</option>
+                <option value="bn">Bengali</option>
+                <option value="pa">Punjabi</option>
+                <option value="te">Telugu</option>
+                <option value="sd">Sindhi</option>
+                <option value="mr">Marathi</option>
+                <option value="kn">Kannada</option>
+                <option value="ps">Pushto</option>
+                <option value="fa">Persian</option>
+                <option value="ar">Arabic</option>
+                <option value="or">Odia</option>
+            </select>
+            <input type="file" id="video-upload" accept="video/*,audio/*" style="display:none">
+            <button onclick="document.getElementById('video-upload').click()" class="action-btn" style="background:#3b82f6; color:white; margin-right:10px; padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                Import Video
+            </button>
+            <button id="auto-caption-btn" onclick="runAutoCaption()" style="background:#10b981; color:white; margin-right:10px; padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 600; border: none; cursor: pointer; display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="22"/></svg>
+                Auto Caption
+            </button>
+            <div id="asr-status" style="display:none; color:#10b981; font-size:11px; font-weight:600; margin-right:10px; max-width:200px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;"></div>
+            <button id="export-btn" class="export-trigger">Export Project</button>
+        </div>
+    </header>
+
+    <div class="studio-layout">
+        <nav class="tool-rail">
+            <button class="tool-btn active" data-tool="select" title="Select / Move (V)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 3 7.07 16.97 2.51-7.39 7.39-2.51L3 3z"/><path d="m13 13 6 6"/></svg>
+            </button>
+            <button class="tool-btn" data-tool="text" title="Add Caption (T)">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3M9 20h6M12 14V4M4 14h16"/></svg>
+            </button>
+            <div class="rail-divider"></div>
+            <button id="clear-canvas" class="tool-btn danger" title="Clear Canvas">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"/></svg>
+            </button>
+        </nav>
+
+        <main class="canvas-viewport" id="viewport">
+            <canvas id="main-canvas"></canvas>
+            <video id="bg-video" playsinline style="position:absolute; pointer-events:none; z-index:-1; opacity:0;"></video>
+            <div class="canvas-overlay">
+                <span id="cursor-pos">X: 0 Y: 0 | Zoom: 100%</span>
+            </div>
+        </main>
+
+        <aside class="properties-panel">
+            <div class="panel-tabs">
+                <button class="panel-tab-btn active" data-panel="captions">Captions</button>
+                <button class="panel-tab-btn" data-panel="templates">Templates</button>
+                <button class="panel-tab-btn" data-panel="audio">Audio</button>
+                <button class="panel-tab-btn" data-panel="export">Export</button>
+            </div>
+            <!-- CAPTIONS TAB -->
+            <div class="panel-tab" id="panel-captions">
+                <div class="panel-section">
+                    <h4 class="panel-label">Caption Text</h4>
+                    <textarea id="caption-text" class="studio-input" rows="3" placeholder="Type your viral caption here..."></textarea>
+                    <div class="caption-mode-switcher">
+                        <button class="mode-btn active" id="mode-word" type="button">Word by Word</button>
+                        <button class="mode-btn" id="mode-line" type="button">Full Line</button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h4 class="panel-label">Viral Presets</h4>
+                    <div class="preset-grid">
+                        <button type="button" class="preset-card active" data-preset="viral-anton">
+                            <span class="preset-preview preview-anton">VIRAL</span>
+                            <span class="preset-name">Hormozi Pop</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="neon-punch">
+                            <span class="preset-preview preview-neon">NEON</span>
+                            <span class="preset-name">Neon Punch</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="boxed-pill">
+                            <span class="preset-preview preview-box">BOX</span>
+                            <span class="preset-name">Boxed Pill</span>
+                        </button>
+                        <button type="button" class="preset-card" data-preset="clean-reel">
+                            <span class="preset-preview preview-clean">CLEAN</span>
+                            <span class="preset-name">Clean Reel</span>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h4 class="panel-label">Typography</h4>
+                    <div class="prop-group">
+                        <label>Font Family</label>
+                        <select id="font-family" class="studio-input">
+                            <option value="'Anton', sans-serif">Anton (Viral / Reels)</option>
+                            <option value="'Outfit', sans-serif">Outfit (Bold Modern)</option>
+                            <option value="'JetBrains Mono', monospace">JetBrains Mono</option>
+                            <option value="Impact, sans-serif">Impact</option>
+                        </select>
+                        <input type="file" id="font-upload" accept=".woff,.woff2,.ttf,.otf" style="display:none">
+                        <button type="button" onclick="document.getElementById('font-upload').click()" class="mini-btn" style="margin-top:6px;">+ Upload Custom Font</button>
+                    </div>
+                    <div class="prop-grid-2">
+                        <div class="prop-group">
+                            <label>Size (px)</label>
+                            <input type="number" id="text-size" class="studio-input" min="16" max="140" value="52">
+                        </div>
+                        <div class="prop-group">
+                            <label>Transform</label>
+                            <button type="button" id="toggle-case" class="case-btn active">UPPERCASE</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h4 class="panel-label">Colors & Outline</h4>
+                    <div class="prop-grid-2">
+                        <div class="prop-group">
+                            <label>Base Text</label>
+                            <input type="color" id="fill-color" class="studio-input" value="#ffffff">
+                        </div>
+                        <div class="prop-group">
+                            <label>Highlight Word</label>
+                            <input type="color" id="highlight-color" class="studio-input" value="#facc15">
+                        </div>
+                    </div>
+                    <div class="prop-grid-2">
+                        <div class="prop-group">
+                            <label>Outline Color</label>
+                            <input type="color" id="stroke-color" class="studio-input" value="#000000">
+                        </div>
+                        <div class="prop-group">
+                            <label>Outline Width</label>
+                            <input type="number" id="stroke-width" min="0" max="20" value="6" class="studio-input">
+                        </div>
+                    </div>
+                    <div class="prop-group">
+                        <div class="flex items-center justify-between">
+                            <label>Background Pill</label>
+                            <input type="checkbox" id="bg-box-toggle" class="cursor-pointer">
+                        </div>
+                        <input type="color" id="bg-box-color" class="studio-input" value="#a79e6a">
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h4 class="panel-label">Timing (seconds)</h4>
+                    <div class="prop-grid-2">
+                        <div class="prop-group">
+                            <label>Start</label>
+                            <input type="number" id="caption-start" class="studio-input" min="0" step="0.1" value="0">
+                        </div>
+                        <div class="prop-group">
+                            <label>End</label>
+                            <input type="number" id="caption-end" class="studio-input" min="0.1" step="0.1" value="5">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="panel-section">
+                    <h4 class="panel-label">Transform</h4>
+                    <div class="prop-group">
+                        <label>Rotation: <span id="rotation-val">0</span>&deg;</label>
+                        <input type="range" id="rotation-slider" class="studio-range" min="-180" max="180" value="0">
+                    </div>
+                    <div class="prop-group">
+                        <label>Opacity: <span id="opacity-val">100</span>%</label>
+                        <input type="range" id="opacity-slider" class="studio-range" min="10" max="100" value="100">
+                    </div>
+                </div>
+
+                <div class="panel-section layers-section">
+                    <div class="flex items-center justify-between">
+                        <h4 class="panel-label">Layers</h4>
+                        <div class="layer-actions">
+                            <button type="button" id="duplicate-layer" class="mini-btn" title="Duplicate (Ctrl+D)">⧉ Dup</button>
+                            <button type="button" id="delete-layer" class="mini-btn danger" title="Delete (Del)">✕ Del</button>
+                        </div>
+                    </div>
+                    <div id="layer-list" class="layer-stack"></div>
+                </div>
+            </div>
+
+            <!-- TEMPLATES TAB -->
+            <div class="panel-tab hidden" id="panel-templates">
+                <div class="panel-section">
+                    <h4 class="panel-label">Caption Templates</h4>
+                    <p class="panel-hint">Click a template to apply text + style to the selected caption.</p>
+                    <div class="template-list" id="template-list">
+                        <button type="button" class="template-card" data-template="hormozi">
+                            <span class="preset-preview preview-anton">THIS CHANGED</span>
+                            <span class="template-meta">Hormozi Pop &middot; "This changed everything"</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="neon">
+                            <span class="preset-preview preview-neon">WAIT FOR IT</span>
+                            <span class="template-meta">Neon Punch &middot; "Wait for it..."</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="boxed">
+                            <span class="preset-preview preview-box">3 STEPS ONLY</span>
+                            <span class="template-meta">Boxed Pill &middot; "3 steps, that's it"</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="clean">
+                            <span class="preset-preview preview-clean">here's the secret</span>
+                            <span class="template-meta">Clean Reel &middot; "here's the secret"</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="hook">
+                            <span class="preset-preview preview-anton">NOBODY TELLS YOU</span>
+                            <span class="template-meta">Hook &middot; "Nobody tells you this"</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="cta">
+                            <span class="preset-preview preview-neon">FOLLOW FOR PART 2</span>
+                            <span class="template-meta">CTA &middot; "Follow for part 2"</span>
+                        </button>
+                        <!-- Hinglish/Desi Viral Styles -->
+                        <button type="button" class="template-card" data-template="hinglish-hook">
+                            <span class="preset-preview preview-hinglish">Kal se nahi — aaj se 🔥</span>
+                            <span class="template-meta">Hinglish Hook &middot; Viral Hinglish style</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="desi-reality">
+                            <span class="preset-preview preview-desireality">Mujhe ye 2 saal pehle pata hota 🥺</span>
+                            <span class="template-meta">Desi Reality &middot; Relatable desi glow</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="game-changer">
+                            <span class="preset-preview preview-gamechanger">Game changer 🚀</span>
+                            <span class="template-meta">Game Changer &middot; Orange pill box</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="my-rules">
+                            <span class="preset-preview preview-myrules">Meri duniya meri rules 😎</span>
+                            <span class="template-meta">My Rules &middot; Bold attitude</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="transformation">
+                            <span class="preset-preview preview-transform">1 year ago vs now. Started 🔥</span>
+                            <span class="template-meta">Transformation &middot; Clean progress</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="comment-bait">
+                            <span class="preset-preview preview-commentbait">Comment 'AI' for tool list 👇</span>
+                            <span class="template-meta">Comment Bait &middot; Neon engagement</span>
+                        </button>
+                        <!-- Viral Hook Styles (Phase 2) -->
+                        <button type="button" class="template-card" data-template="pov-reveal">
+                            <span class="preset-preview preview-pov">POV: You finally figured it out</span>
+                            <span class="template-meta">POV Reveal &middot; First-person hook</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="plot-twist">
+                            <span class="preset-preview preview-plottwist">Plot twist: I am the main character</span>
+                            <span class="template-meta">Plot Twist &middot; Surprise reveal</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="wait-for-it">
+                            <span class="preset-preview preview-waitend">Wait for it... 😱</span>
+                            <span class="template-meta">Wait Till End &middot; Anticipation builder</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="unbelievable">
+                            <span class="preset-preview preview-unbelievable">You won't believe what happens next</span>
+                            <span class="template-meta">Unbelievable &middot; Shock hook</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="secret-revealed">
+                            <span class="preset-preview preview-secret">Nobody tells you this...</span>
+                            <span class="template-meta">Secret Revealed &middot; Insider knowledge</span>
+                        </button>
+                        <!-- Engagement Styles (Phase 3) -->
+                        <button type="button" class="template-card" data-template="save-worthy">
+                            <span class="preset-preview preview-saveworthy">Save karo future ke liye 📌</span>
+                            <span class="template-meta">Save Worthy &middot; Orange-red gradient pill</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="tag-friend">
+                            <span class="preset-preview preview-tagfriend">Tag karo us dost ko 😂</span>
+                            <span class="template-meta">Tag Friend &middot; Purple glow</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="part-2">
+                            <span class="preset-preview preview-part2">Follow for Part 2 👀</span>
+                            <span class="template-meta">Part 2 Teaser &middot; Golden glow</span>
+                        </button>
+                        <!-- Aesthetic Styles (Phase 3) -->
+                        <button type="button" class="template-card" data-template="clean-minimal">
+                            <span class="preset-preview preview-minimal">Less talk, more reels</span>
+                            <span class="template-meta">Clean Minimal &middot; Unbothered italic</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="main-character">
+                            <span class="preset-preview preview-mainchar">Main character energy ✨</span>
+                            <span class="template-meta">Main Character &middot; Soft white glow</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="manifesting">
+                            <span class="preset-preview preview-manifesting">Manifesting this reality 🕯️</span>
+                            <span class="template-meta">Manifesting &middot; Purple-blue gradient</span>
+                        </button>
+                        <button type="button" class="template-card" data-template="real-over-perfect">
+                            <span class="preset-preview preview-realperfect">Real > Perfect ✌️</span>
+                            <span class="template-meta">Real &gt; Perfect &middot; Bold clean</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- AUDIO TAB -->
+            <div class="panel-tab hidden" id="panel-audio">
+                <div class="panel-section">
+                    <h4 class="panel-label">Playback</h4>
+                    <div class="prop-group">
+                        <label>Volume: <span id="volume-val">100</span>%</label>
+                        <input type="range" id="volume-slider" class="studio-range" min="0" max="100" value="100">
+                    </div>
+                    <div class="prop-group">
+                        <div class="flex items-center justify-between">
+                            <label>Mute</label>
+                            <input type="checkbox" id="mute-toggle" class="cursor-pointer">
+                        </div>
+                    </div>
+                </div>
+                <div class="panel-section">
+                    <h4 class="panel-label">Waveform</h4>
+                    <p class="panel-hint" id="waveform-status">Import a video to extract its real audio waveform.</p>
+                    <canvas id="audio-preview-canvas" class="audio-preview"></canvas>
+                </div>
+                <div class="panel-section">
+                    <h4 class="panel-label">Audio Enhancement</h4>
+                    <div class="prop-group">
+                        <div class="flex items-center justify-between">
+                            <label>AI Noise Cleanup</label>
+                            <input type="checkbox" id="enhance-toggle" class="cursor-pointer">
+                        </div>
+                        <p class="panel-hint">Traffic / hiss / crowd noise reduction + voice clarity EQ. Applied on video export via Web Audio processing.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- EXPORT TAB -->
+            <div class="panel-tab hidden" id="panel-export">
+                <div class="panel-section">
+                    <h4 class="panel-label">Project File</h4>
+                    <div class="export-btn-row">
+                        <button type="button" id="export-project-tab-btn" class="panel-action-btn">Export Project JSON</button>
+                        <input type="file" id="project-import" accept=".json,application/json" style="display:none">
+                        <button type="button" onclick="document.getElementById('project-import').click()" class="panel-action-btn secondary">Import Project JSON</button>
+                        <button type="button" id="save-library-btn" class="panel-action-btn secondary">Save to Library</button>
+                    </div>
+                    <p class="panel-hint">Library saves projects in this browser. Uploads are never sent anywhere.</p>
+                </div>
+                <div class="panel-section">
+                    <h4 class="panel-label">Export Subtitles</h4>
+                    <div class="export-btn-row">
+                        <button type="button" id="export-srt-btn" class="panel-action-btn">Download SRT</button>
+                        <button type="button" id="export-vtt-btn" class="panel-action-btn secondary">Download VTT</button>
+                    </div>
+                    <p class="panel-hint">SubRip (.srt) and WebVTT (.vtt) with per-caption timing, compatible with Premiere Pro, DaVinci Resolve, YouTube.</p>
+                </div>
+                <div class="panel-section">
+                    <h4 class="panel-label">Export Transcript</h4>
+                    <div class="export-btn-row">
+                        <button type="button" id="export-txt-btn" class="panel-action-btn secondary">.txt</button>
+                        <button type="button" id="export-md-btn" class="panel-action-btn secondary">.md</button>
+                    </div>
+                    <p class="panel-hint">Plain-text or Markdown transcript with timestamps — useful for blog posts, show notes and accessibility.</p>
+                </div>
+                <div class="panel-section">
+                    <h4 class="panel-label">Export Video</h4>
+                    <div class="prop-group">
+                        <label>Resolution</label>
+                        <select id="export-resolution" class="studio-input">
+                            <option value="720">HD 720p</option>
+                            <option value="1080" selected>Full HD 1080p</option>
+                            <option value="4k">4K (2160p)</option>
+                        </select>
+                    </div>
+                    <div class="prop-group">
+                        <label>Frame Rate</label>
+                        <select id="export-fps" class="studio-input">
+                            <option value="24">24 fps</option>
+                            <option value="30" selected>30 fps</option>
+                            <option value="60">60 fps</option>
+                        </select>
+                    </div>
+                    <div class="prop-group">
+                        <div class="flex items-center justify-between">
+                            <label>Alpha Channel (transparent overlay)</label>
+                            <input type="checkbox" id="export-alpha" class="cursor-pointer">
+                        </div>
+                        <p class="panel-hint">Renders captions over a transparent background for compositing in Premiere / Resolve.</p>
+                    </div>
+                    <button type="button" id="export-video-btn" class="panel-action-btn primary">Export Video</button>
+                    <div id="export-progress-wrap" class="export-progress-wrap hidden">
+                        <div class="export-progress-bar"><div id="export-progress-fill"></div></div>
+                        <div class="export-progress-meta">
+                            <span id="export-progress-text">0%</span>
+                            <button type="button" id="export-cancel-btn" class="mini-btn danger">Cancel</button>
+                        </div>
+                    </div>
+                    <p class="panel-hint">Renders in real time (video plays through once). Keep this tab active until done.</p>
+                </div>
+            </div>
+        </aside>
+    </div>
+
+    <!-- TIMELINE -->
+    <div class="studio-timeline">
+        <div class="timeline-controls">
+            <button id="play-btn" class="timeline-btn">▶ Play</button>
+            <div class="timecode-badge" id="time-display">00:00:00 / 00:00:00</div>
+            <div class="timeline-toolbar-pills">
+                <span class="safe-zone-badge" id="safe-zone-toggle" title="Toggle safe zone guides">Safe Zone</span>
+            </div>
+        </div>
+        <div class="timeline-track" id="timeline-track">
+            <!-- Ruler Ticks -->
+            <div class="timeline-ruler" id="timeline-ruler"></div>
+            <!-- Caption Blocks Track (timing) -->
+            <div class="caption-blocks-track" id="caption-blocks-track"></div>
+            <!-- Word Badges Track -->
+            <div class="caption-badges-track" id="caption-badges-track"></div>
+            <!-- Video Track -->
+            <div class="media-track video-media-track" id="video-track-bar">
+                <span class="media-track-label">Video 1</span>
+            </div>
+            <!-- Audio Track -->
+            <div class="media-track audio-media-track" id="audio-track-bar">
+                <span class="media-track-label">Audio 1</span>
+                <canvas id="waveform-canvas" class="waveform-canvas"></canvas>
+            </div>
+            <!-- Playhead -->
+            <div id="playhead" class="playhead"></div>
+        </div>
+    </div>
+
+    <script src="js/core.js"></script>
+    <script src="js/transcribe.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/tools.js"></script>
+    <script src="js/srt.js"></script>
+    <script src="js/exporters.js"></script>
+    <script src="js/library.js"></script>
+</body>
+</html>

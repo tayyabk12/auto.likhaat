@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up — Kalakar</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Outfit:wght@400;600;800;900&display=swap">
+    <link rel="stylesheet" href="css/auth.css">
+</head>
+<body class="auth-bg">
+    <div class="auth-card">
+        <div class="logo-row">
+            <a href="/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="116" height="28" fill="none" viewBox="0 0 116 28" aria-label="Kalakar">
+                    <path fill="#fff" d="M11.83 12.456q1.537.405 2.548 1.289 1.013.847 1.745 2.247.733 1.362 1.536 3.757L20.45 28h-4.956l-2.652-7.735q-.489-1.437-.908-2.174a3.4 3.4 0 0 0-1.116-1.289q-.733-.517-2.06-.736l-3.838 4.493V28H0V2.216h4.92V14.04l9.877-11.824h5.793z"/>
+                    <path fill="#48A680" d="M29.1 2.105h-5.91l5.991 13.097h-5.99V28h12.185V15.202z"/>
+                    <path fill="#1D1D1D" d="M27.09 19.94h4.549v4.802h-4.55z"/>
+                    <path fill="#fff" d="M42.992 27.847a.31.31 0 0 1-.36.045q-1.624-.917-2.283-2.065-.699-1.253-.698-3.463V5.714q0-.993-.384-1.62-.286-.514-.972-1.102a.37.37 0 0 1-.015-.541L40.846.084a.31.31 0 0 1 .36-.045q1.624.92 2.284 2.103.698 1.215.698 3.425v16.65q0 .995.349 1.62.315.514 1.006 1.103a.366.366 0 0 1 .016.54z"/>
+                    <path fill="#48A680" d="M54.372 2.105h-5.91l5.991 13.097h-5.99V28h12.185V15.202z"/>
+                    <path fill="#1D1D1D" d="M52.362 19.94h4.55v4.802h-4.55z"/>
+                    <path fill="#fff" d="M80.513 27.565c.058.219-.098.435-.313.435h-3.967a.33.33 0 0 1-.313-.251l-1.47-5.569q-.279-1.03-.837-1.51-.525-.485-1.729-.644a.31.31 0 0 0-.265.099l-2.066 2.213a.35.35 0 0 0-.093.24v5.079c0 .19-.145.343-.325.343h-3.887a.334.334 0 0 1-.325-.343v-21.5q0-.995-.384-1.62-.286-.514-.972-1.103a.37.37 0 0 1-.015-.541L66.119.526a.31.31 0 0 1 .36-.045q1.624.92 2.283 2.103.698 1.215.698 3.426v9.761c0 .308.355.46.558.239l4.79-5.218a.32.32 0 0 1 .234-.104h4.599c.288 0 .434.367.23.583l-4.601 4.92c-.177.188-.092.511.145.601q1.283.486 2.037 1.557.942 1.29 1.64 3.831zM98.094 22.217q0 .995.35 1.62.315.514 1.006 1.103a.366.366 0 0 1 .016.54l-2.567 2.367a.305.305 0 0 1-.36.045q-1.52-.864-2.258-2.072a.38.38 0 0 0-.612-.051 6.5 6.5 0 0 1-1.752 1.458q-1.326.773-3.28.773-2.478 0-3.944-1.326-1.466-1.364-1.466-3.83 0-2.211 1.082-3.39 1.117-1.216 2.548-1.657a16.7 16.7 0 0 1 3.176-.626l1.675-.185q1.011-.11 1.396-.368.418-.258.454-.847-.07-1.105-.699-1.879-.593-.773-2.303-.773-1.117 0-1.954.442-.743.392-1.515 1.22a.32.32 0 0 1-.427.046l-2.596-1.909a.34.34 0 0 1-.066-.484 6.6 6.6 0 0 1 2.335-1.857q1.536-.773 4.223-.773 7.538 0 7.538 6.446zm-8.306 2.357q1.814 0 2.792-.92a3.13 3.13 0 0 0 .978-2.321V20.28c0-.24-.23-.413-.451-.36q-.6.144-1.678.27l-1.047.11q-1.187.11-1.99.59-.802.443-.802 1.694 0 .958.593 1.474.593.515 1.605.515M112.978 10.246q1.689 0 2.893.892c.11.08.154.228.116.363l-.929 3.308a.335.335 0 0 1-.499.2 5 5 0 0 0-1.022-.49q-.663-.222-1.64-.222-2.285 0-3.299 3.19a.4.4 0 0 0-.017.107v10.063c0 .19-.145.343-.325.343h-3.887a.335.335 0 0 1-.325-.343V16.029q0-.995-.384-1.621-.285-.514-.972-1.102a.37.37 0 0 1-.015-.541l2.564-2.364a.31.31 0 0 1 .365-.043q1.049.612 1.688 1.287.425.449.707 1.006c.137.27.541.302.703.049a5.8 5.8 0 0 1 1.452-1.57q1.151-.885 2.826-.885"/>
+                </svg>
+            </a>
+        </div>
+        <h1>Create your account</h1>
+        <p class="sub">Start captioning in desi languages — free</p>
+        <form id="signup-form">
+            <div class="auth-field">
+                <label for="name">Name</label>
+                <input type="text" id="name" required placeholder="Your name" autocomplete="name">
+            </div>
+            <div class="auth-field">
+                <label for="email">Email</label>
+                <input type="email" id="email" required placeholder="you@example.com" autocomplete="email">
+            </div>
+            <div class="auth-field">
+                <label for="password">Password</label>
+                <input type="password" id="password" required placeholder="Min. 6 characters" minlength="6" autocomplete="new-password">
+            </div>
+            <button type="submit" class="auth-btn">Create Account</button>
+            <p class="auth-error" id="auth-error"></p>
+        </form>
+        <div class="auth-switch">
+            Already have an account? <a href="/signin">Sign In</a>
+        </div>
+        <div class="auth-demo-note">
+            <strong>Open-source demo:</strong> Accounts are stored locally in your browser (localStorage). No data is sent to any server. For the real hosted product, visit <a href="https://app.kalakar.io/signup" style="color:#48A680">app.kalakar.io</a>.
+        </div>
+    </div>
+    <script>
+        document.getElementById('signup-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim().toLowerCase();
+            const password = document.getElementById('password').value;
+            const errEl = document.getElementById('auth-error');
+            errEl.style.display = 'none';
+
+            if (!name || !email || !password) {
+                errEl.textContent = 'Please fill in all fields.';
+                errEl.style.display = 'block';
+                return;
+            }
+            if (password.length < 6) {
+                errEl.textContent = 'Password must be at least 6 characters.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            let users = {};
+            try {
+                users = JSON.parse(localStorage.getItem('kalakar_users') || '{}');
+            } catch (_) {
+                users = {};
+            }
+            if (users[email]) {
+                errEl.textContent = 'An account with this email already exists. Please sign in.';
+                errEl.style.display = 'block';
+                return;
+            }
+
+            users[email] = { name, password, created: Date.now() };
+            localStorage.setItem('kalakar_users', JSON.stringify(users));
+            localStorage.setItem('kalakar_session', JSON.stringify({ email, name, ts: Date.now() }));
+            window.location.href = '/editor';
+        });
+    </script>
+</body>
+</html>
